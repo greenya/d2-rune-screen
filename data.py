@@ -1,21 +1,3 @@
-# from dataclasses import dataclass, field
-
-# runes = (
-#     'el', 'eld', 'tir', 'nef', 'eth', 'ith',
-#     'tal', 'ral', 'ort', 'thul', 'amn', 'sol',
-#     'shael', 'dol', 'hel', 'io', 'lum', 'ko',
-#     'fal', 'lem', 'pul', 'um', 'mal', 'ist',
-#     'gul', 'vex', 'ohm', 'lo', 'sur', 'ber',
-#     'jah', 'cham', 'zod'
-# )
-
-# @dataclass
-# class Rune:
-#     name: str = field(req=True)
-#     row: int
-#     col: int
-
-
 from typing import List
 
 

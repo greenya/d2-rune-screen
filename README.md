@@ -23,7 +23,7 @@ Diablo 2 rune helper.
         - [ ] add progress or at least block ui, as pasting large image takes time and clicking Paste again breaks app
     - [ ] fix pasting image for Windows, other platforms are optional (would be nice to have)
 - [x] Detect runes, locate them on image
-- [ ] Show found runes in the info sidebar
+- [x] Show found runes in the info sidebar
 - [ ] Show possible runewords
 - [ ] Settings window
     - [ ] Match Ratio (%): 93 (80-98)
