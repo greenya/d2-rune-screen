@@ -1,11 +1,16 @@
 from typing import List
 
 
+# TODO: add "recipe"
 class Rune:
+
     def __init__(self, name: str, row: int, col: int):
         self.name = name
         self.row = row
         self.col = col
+
+    def __repr__(self):
+        return f'<Rune: {self.name}>'
 
 
 runes: List[Rune] = [
@@ -42,4 +47,38 @@ runes: List[Rune] = [
     Rune(name='jah', row=6, col=0),
     Rune(name='cham', row=6, col=1),
     Rune(name='zod', row=6, col=2)
+]
+
+
+# TODO: add "gear" and "stats"
+class Runeword:
+
+    def __init__(self, name: str, runes: List[str], level: int):
+        self.name = name
+        self.runes = runes
+        self.level = level
+        self.word = ''.join(x.title() for x in self.runes)
+
+    def __repr__(self):
+        return f'<Runeword: {self.name}>'
+
+
+# TODO: add all runes
+runewords: List[Runeword] = [
+    Runeword(name='Ancient\'s Pledge', runes=[ 'ral', 'ort', 'tal' ], level=21),
+    Runeword(name='Edge', runes=[ 'tir', 'tal', 'amn' ], level=25),
+    Runeword(name='Gloom', runes=[ 'fal', 'um', 'pul' ], level=47),
+    Runeword(name='Holy Thunder', runes=[ 'eth', 'ral', 'ort', 'tal' ], level=23),
+    Runeword(name='Insight', runes=[ 'ral', 'tir', 'tal', 'sol' ], level=27),
+    Runeword(name='King\'s Grace', runes=[ 'amn', 'ral', 'thul' ], level=25),
+    Runeword(name='Lore', runes=[ 'ort', 'sol' ], level=27),
+    Runeword(name='Leaf', runes=[ 'tir', 'ral' ], level=19),
+    Runeword(name='Malice', runes=[ 'ith', 'el', 'eth' ], level=15),
+    Runeword(name='Nadir', runes=[ 'nef', 'tir' ], level=13),
+    Runeword(name='Radiance', runes=[ 'nef', 'sol', 'ith' ], level=27),
+    Runeword(name='Spirit', runes=[ 'tal', 'thul', 'ort', 'amn' ], level=25),
+    Runeword(name='Stealth', runes=[ 'tal', 'eth' ], level=17),
+    Runeword(name='Steel', runes=[ 'tir', 'el' ], level=13),
+    Runeword(name='Strength', runes=[ 'amn', 'tir' ], level=25),
+    Runeword(name='Zephyr', runes=[ 'ort', 'eth' ], level=21)
 ]

@@ -1,5 +1,6 @@
+from textwrap import fill
+from typing import List
 import io
-from os import name
 import tkinter as tk
 import tkinter.filedialog
 import tkinter.messagebox
@@ -48,22 +49,20 @@ class MainWindow:
 
         # middle > sidebar
 
-        self.sidebar = tk.Frame(self.middle, bg='#242') # width=300
+        # TODO: make sidebar vertically scrollable
+        self.sidebar = tk.Frame(self.middle)
 
-        self.runes_bar = tk.Frame(self.sidebar, bg='#422') # width=300, height=300
-        self.runes_bar.pack(side='top')
+        self.runes_bar = tk.Frame(self.sidebar)
+        self.runes_bar.pack(side='top', fill='x')
 
         for rune in data.runes:
             label = tk.Label(self.runes_bar, name=rune.name, relief=tk.RAISED, width=6)
             label.grid(row=rune.row, column=rune.col)
             self.setup_rune_count(rune.name, 0)
 
-        # self.runes_bar = tk.Frame(self.sidebar)
+        self.runewords_bar = tk.Frame(self.sidebar)
+        self.runewords_bar.pack(side='top', fill='x')
 
-        # vbar = tk.Scrollbar(self.sidebar, orient='vertical', command=self.runes.winfo_y)
-        # vbar.pack(side='right', fill='y')
-
-        # self.runes_bar.config(yscrollcommand=vbar.set)
         self.sidebar.pack(side='left', fill='y')
 
         # middle > canvas
@@ -79,7 +78,7 @@ class MainWindow:
         self.canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
         self.canvas.pack(expand=True)
 
-        self.setup_new_image(pil_image.open('/home/lexx/Projects/d2-rune-screen/examples/2.jpg')) # ! DEBUG
+        self.setup_new_image(pil_image.open('/home/lexx/Projects/d2-rune-screen/examples/6.jpg')) # ! DEBUG
 
     def load_click(self):
         filename = tkinter.filedialog.askopenfilename(
@@ -115,7 +114,7 @@ class MainWindow:
 
     def setup_new_image(self, image: pil_image.Image):
         self.setup_preview_image(image)
-        self.locate_runes(image)
+        self.setup_sidebar(image)
 
     def setup_preview_image(self, image: pil_image.Image):
         self.preview_image = pil_image_tk.PhotoImage(image)
@@ -131,10 +130,12 @@ class MainWindow:
         self.shade_image = pil_image_tk.PhotoImage(image)
         self.canvas.create_image(0, 0, image=self.shade_image, anchor='nw')
 
-    def locate_runes(self, image: pil_image.Image):
-        found_runes = util.locate_runes_in_image(image)
+    def setup_sidebar(self, image: pil_image.Image):
+        found_runes = util.locate_runes(image)
         self.mark_runes_canvas(found_runes)
         self.setup_runes_sidebar(found_runes)
+        found_words = util.match_runewords(found_runes)
+        self.setup_runewords_sidebar(found_words)
 
     def mark_runes_canvas(self, found_runes: dict):
         for name in found_runes:
@@ -148,6 +149,17 @@ class MainWindow:
                 count = len(found_runes[rune.name])
 
             self.setup_rune_count(rune.name, count)
+
+    def setup_runewords_sidebar(self, matches: List[util.RunewordMatch]):
+        for widget in self.runewords_bar.winfo_children():
+            widget.destroy()
+
+        for match in matches:
+            print(match, match.missing_count, match.has_runes)
+
+            # TODO: make list of runes, show what is missing with dimmed color
+            label = tk.Label(self.runewords_bar, text=f'{match.name}\n{match.has_runes} -- missing: {match.missing_count}', relief=tk.RAISED)
+            label.pack(side='top', fill='x')
 
     def setup_rune_count(self, rune_name, rune_count):
         widget = self.runes_bar.children[rune_name]

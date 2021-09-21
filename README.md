@@ -24,7 +24,7 @@ Diablo 2 rune helper.
     - [ ] fix pasting image for Windows, other platforms are optional (would be nice to have)
 - [x] Detect runes, locate them on image
 - [x] Show found runes in the info sidebar
-- [ ] Show possible runewords
+- [x] Show possible runewords
 - [ ] Settings window
     - [ ] Match Ratio (%): 93 (80-98)
     - [ ] Preview Image Scale (%): 100 (25-100)
