@@ -10,17 +10,15 @@ import PIL.ImageTk as pil_image_tk
 import data
 import util
 
-
 def open(title: str, geometry: str):
     root = tk.Tk()
     root.title(title)
     root.geometry(geometry)
 
-    MainWindow(root)
+    Main_Window(root)
     root.mainloop()
 
-
-class MainWindow:
+class Main_Window:
 
     def __init__(self, parent: tk.Frame):
         self.root = tk.Frame(parent)
@@ -78,7 +76,9 @@ class MainWindow:
         self.canvas.config(xscrollcommand=hbar.set, yscrollcommand=vbar.set)
         self.canvas.pack(expand=True)
 
-        self.setup_new_image(pil_image.open('/home/lexx/Projects/d2-rune-screen/examples/6.jpg')) # ! DEBUG
+        # !! DEBUG
+        with pil_image.open(data.EXAMPLES_DIR / '6.jpg') as image:
+            self.setup_new_image(image)
 
     def load_click(self):
         filename = tkinter.filedialog.askopenfilename(
@@ -150,7 +150,7 @@ class MainWindow:
 
             self.setup_rune_count(rune.name, count)
 
-    def setup_runewords_sidebar(self, matches: List[util.RunewordMatch]):
+    def setup_runewords_sidebar(self, matches: List[util.Runeword_Match]):
         for widget in self.runewords_bar.winfo_children():
             widget.destroy()
 
@@ -172,6 +172,5 @@ class MainWindow:
     def settings_click(self):
         tkinter.messagebox.showinfo(message='Settings window not implemented yet.')
 
-
-# class SettingsWindow:
+# class Settings_Window:
 #     pass

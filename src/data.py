@@ -1,5 +1,15 @@
 from typing import List
+from pathlib import Path
+import sys
 
+ROOT_DIR = (
+    Path(sys._MEIPASS)
+    if getattr(sys, 'frozen', False)
+    else Path(__file__).resolve().parent.parent
+)
+
+RUNES_DIR = ROOT_DIR / 'runes'
+EXAMPLES_DIR = ROOT_DIR / 'examples'
 
 # TODO: add "recipe"
 class Rune:
@@ -11,7 +21,6 @@ class Rune:
 
     def __repr__(self):
         return f'<Rune: {self.name}>'
-
 
 runes: List[Rune] = [
     Rune(name='el', row=0, col=0),
@@ -49,7 +58,6 @@ runes: List[Rune] = [
     Rune(name='zod', row=6, col=2)
 ]
 
-
 # TODO: add "gear" and "stats"
 class Runeword:
 
@@ -61,7 +69,6 @@ class Runeword:
 
     def __repr__(self):
         return f'<Runeword: {self.name}>'
-
 
 # TODO: add all runes
 runewords: List[Runeword] = [

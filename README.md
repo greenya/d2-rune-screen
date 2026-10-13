@@ -4,14 +4,34 @@ Diablo 2 rune helper.
 
 ## Setup
 
-    > sudo apt-get install python3-tk
-    > sudo apt-get install python3-pil.imagetk
-    > pip install pillow
-    > pip install pyinstaller
+```sh
+# Linux
+sudo apt-get install python3-tk python3-venv
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+
+# Windows
+winget install --exact --id Python.Python.3.14 --source winget
+# Reopen terminal in the project directory after installing Python
+py -3.14 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+## Run
+
+```sh
+# Linux
+.venv/bin/python src/main.py
+
+# Windows
+.venv\Scripts\python.exe src\main.py
+```
 
 ## Build
 
-    > pyinstaller --onefile --windowed --clean main.py
+```sh
+pyinstaller --onefile --windowed --clean --add-data "runes:runes" --add-data "examples:examples" src/main.py
+```
 
 ## TODO
 

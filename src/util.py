@@ -4,15 +4,14 @@ import PIL.Image as pil_image
 
 import data
 
-
-def locate_runes(image: pil_image.Image):
+def locate_runes(image: pil_image.Image) -> dict:
     result = {}
 
     image_rgb = numpy.array(image.convert('RGB'))
     image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2GRAY)
 
     for rune in data.runes:
-        tpl = cv2.imread(f'runes/{rune.name}.png', 0)
+        tpl = cv2.imread(str(data.RUNES_DIR / f'{rune.name}.png'), 0)
         w, h = tpl.shape[::-1]
 
         res = cv2.matchTemplate(image_gray, tpl, cv2.TM_CCOEFF_NORMED)
@@ -26,8 +25,7 @@ def locate_runes(image: pil_image.Image):
 
     return result
 
-
-class RunewordMatch:
+class Runeword_Match:
 
     def __init__(self, name: str, has_runes: list, missing_count: int):
         self.name = name
@@ -35,11 +33,10 @@ class RunewordMatch:
         self.missing_count = missing_count
 
     def __repr__(self):
-        return f'<RunewordMatch: {self.name}>'
-
+        return f'<Runeword_Match: {self.name}>'
 
 # FIXME: runeword can have duplicated runes (found with "Sanctuary" (KoKoMal) might be more), code below doesn't assume it
-def match_runewords(runes: dict):
+def match_runewords(runes: dict) -> list[Runeword_Match]:
     matches = []
 
     for word in data.runewords:
@@ -53,9 +50,9 @@ def match_runewords(runes: dict):
         missing_count = len(word.runes) - len(has_runes)
 
         if len(has_runes) > 0:
-            matches.append(RunewordMatch(word.name, has_runes, missing_count))
+            matches.append(Runeword_Match(word.name, has_runes, missing_count))
 
-    def get_missing_count(match: RunewordMatch): # TODO: maybe there is a way to move this into RunewordMatch class itself
+    def get_missing_count(match: Runeword_Match): # TODO: maybe there is a way to move this into RunewordMatch class itself
         return match.missing_count
 
     matches.sort(key=get_missing_count)
